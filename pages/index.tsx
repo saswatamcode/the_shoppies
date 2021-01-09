@@ -5,12 +5,13 @@ import { IResults, IMovie } from "../types/types";
 import MovieCard from "../components/MovieCard";
 import SearchBar from "../components/SearchBar";
 import Banner from "../components/Banner";
+import useStickyState from "../lib/useStickyState";
 
 const Home: React.FC = () => {
   const [search, setSearch] = useState<string>("");
   const [searchResults, setSearchResults] = useState<IResults>();
   const [isSearching, setIsSearching] = useState<boolean>(false);
-  const [nominees, setNominees] = useState<IMovie[]>([]);
+  const [nominees, setNominees] = useStickyState([], "nominees");
   const [showBanner, setShowBanner] = useState<boolean>(false);
   const debouncedSearch = useDebounce(search, 500);
 
@@ -80,6 +81,7 @@ const Home: React.FC = () => {
                   if (nominees.includes(result)) {
                     return (
                       <MovieCard
+                        key={result.imdbID}
                         result={result}
                         nominatedList={false}
                         disableBtn
@@ -92,6 +94,7 @@ const Home: React.FC = () => {
                   } else {
                     return (
                       <MovieCard
+                        key={result.imdbID}
                         result={result}
                         nominatedList={false}
                         color={
@@ -119,6 +122,7 @@ const Home: React.FC = () => {
                   {nominees.map((result: IMovie) => {
                     return (
                       <MovieCard
+                        key={result.imdbID}
                         result={result}
                         nominatedList
                         color={

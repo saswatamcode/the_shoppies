@@ -6,7 +6,7 @@ interface BannerProps {
 
 const Banner: React.FC<BannerProps> = ({ close }) => {
   return (
-    <div className="bg-indigo-600 rounded-xl mb-14">
+    <div className="bg-indigo-600 rounded-xl mb-14 shadow-xl">
       <div className="w-6xl mx-auto py-3 px-3 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between flex-wrap">
           <div className="w-0 flex-1 flex items-center">
@@ -34,9 +34,9 @@ const Banner: React.FC<BannerProps> = ({ close }) => {
                 aria-hidden="true"
               >
                 <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
                   d="M6 18L18 6M6 6l12 12"
                 />
               </svg>

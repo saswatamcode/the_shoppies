@@ -31,7 +31,7 @@ const MovieCard: React.FC<MovieCardProps> = ({
       {!nominatedList && (
         <Image
           className="object-cover rounded-md shadow-md"
-          src={result.Poster}
+          src={result.Poster !== "N/A"? result.Poster : "/unavailable.png"}
           alt={result.Title}
           height={400}
           width={250}
@@ -42,7 +42,7 @@ const MovieCard: React.FC<MovieCardProps> = ({
         disabled={disableBtn}
         className={`flex items-center justify-around bg-white text-${
           disableBtn ? "gray-400" : "red-400"
-        } h-8 rounded-full w-5/12`}
+        } h-8 rounded-full w-5/12 shadow-md`}
         onClick={() => handler(result)}
       >
         {nominatedList ? (
