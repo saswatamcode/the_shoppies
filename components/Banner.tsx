@@ -22,6 +22,7 @@ const Banner: React.FC<BannerProps> = ({ close }) => {
           <div className="order-2 flex-shrink-0 sm:order-3 sm:ml-3">
             <button
               type="button"
+              name="Close Banner"
               onClick={close}
               className="-mr-1 flex p-2 rounded-md hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-white sm:-mr-2"
             >

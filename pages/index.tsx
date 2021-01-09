@@ -8,6 +8,7 @@ import Banner from "../components/Banner";
 import useStickyState from "../lib/useStickyState";
 import ResultBar from "../components/ResultsBar";
 import Loading from "../components/Loading";
+import Head from "next/head";
 
 const Home: React.FC = () => {
   const [search, setSearch] = useState<string>("");
@@ -18,11 +19,11 @@ const Home: React.FC = () => {
   const debouncedSearch = useDebounce(search, 500);
 
   const colors = [
-    "purple-400",
-    "yellow-400",
-    "red-400",
-    "blue-400",
-    "green-400",
+    "bg-purple-400",
+    "bg-yellow-400",
+    "bg-red-400",
+    "bg-blue-400",
+    "bg-green-400",
   ];
 
   const fetchData = () => {
@@ -82,6 +83,44 @@ const Home: React.FC = () => {
   return (
     <>
       {showBanner ? <Banner close={() => setShowBanner(false)} /> : <></>}
+      <Head>
+        <title>The Shoppies - Saswata Mukherjee</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        <meta name="title" content="The Shoppies - Saswata Mukherjee" />
+        <meta
+          name="description"
+          content="The Shoppies. For nominating various movies for The Shoppies award!"
+        />
+        <meta
+          name="keywords"
+          content="shoppies, saswatamcode, next.js, vercel, tailwindcss"
+        />
+        <meta name="author" content="Saswata Mukherjee" />
+
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://the-shoppies-sm.vercel.app/" />
+        <meta property="og:title" content="The Shoppies - Saswata Mukherjee" />
+        <meta
+          property="og:description"
+          content="The Shoppies. For nominating various movies for The Shoppies award!"
+        />
+        <meta property="og:image" content="../public/screenshot.png" />
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta
+          property="twitter:url"
+          content="https://the-shoppies-sm.vercel.app/"
+        />
+        <meta
+          property="twitter:title"
+          content="The Shoppies - Saswata Mukherjee"
+        />
+        <meta
+          property="twitter:description"
+          content="The Shoppies. For nominating various movies for The Shoppies award!"
+        />
+        <meta property="twitter:image" content="../public/screenshot.png" />
+      </Head>
+
       <h1 className="bg-clip-text text-transparent bg-gradient-to-r from-blue-700 via-red-500 to-yellow-500 text-5xl font-black mb-10">
         The Shoppies
       </h1>
@@ -95,7 +134,7 @@ const Home: React.FC = () => {
           />
           {isSearching && <Loading />}
 
-          <div className="flex flex-col gap-7 md:grid md:grid-cols-2 md:gap-5 w-full">
+          <div className="flex flex-col space-y-7 md:grid md:grid-cols-2 md:gap-5 w-full">
             {!isSearching &&
               searchResults &&
               searchResults.Response === "True" && (

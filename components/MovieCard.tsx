@@ -20,7 +20,7 @@ const MovieCard: React.FC<MovieCardProps> = ({
   return (
     <div
       key={result.imdbID}
-      className={`flex flex-col h-auto justify-center text-white bg-${color} p-5 rounded-lg shadow-xl`}
+      className={`flex flex-col h-auto justify-center text-white ${color} p-5 rounded-lg shadow-xl`}
     >
       <h4 className="text-xl font-bold">{result.Title}</h4>
       <div className="flex justify-between w-full text-md font-semibold">
@@ -40,8 +40,9 @@ const MovieCard: React.FC<MovieCardProps> = ({
       <br />
       <button
         disabled={disableBtn}
-        className={`flex items-center justify-around bg-white text-${
-          disableBtn ? "gray-400" : "red-400"
+        name={nominatedList ? "Unnominate" : "Nominate"}
+        className={`flex items-center justify-around bg-white ${
+          disableBtn ? "text-gray-400" : "text-red-400"
         } h-8 rounded-full w-7/12 xl:w-6/12 md:w-5/12 shadow-md`}
         onClick={() => handler(result)}
       >

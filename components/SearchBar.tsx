@@ -25,9 +25,15 @@ const SearchBar: React.FC<SearchBarProps> = ({
             className="w-11/12 focus:outline-none"
             value={value}
             onChange={handleChange}
-            aria-label="Search"
+            aria-label="Search Field"
           />
-          <button type="submit" onClick={search}>
+          <button
+            name="Search"
+            aria-label="Search"
+            type="submit"
+            className="h-8 w-8"
+            onClick={search}
+          >
             <FaSearch />
           </button>
         </div>
