@@ -31,7 +31,7 @@ const MovieCard: React.FC<MovieCardProps> = ({
       {!nominatedList && (
         <Image
           className="object-cover rounded-md shadow-md"
-          src={result.Poster !== "N/A"? result.Poster : "/unavailable.png"}
+          src={result.Poster !== "N/A" ? result.Poster : "/unavailable.png"}
           alt={result.Title}
           height={400}
           width={250}

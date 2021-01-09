@@ -7,9 +7,7 @@ export default (req: NextApiRequest, res: NextApiResponse) => {
   } = req;
 
   axios
-    .get(
-      `https://www.omdbapi.com/?s=${search}&apikey=${process.env.API_KEY}`
-    )
+    .get(`https://www.omdbapi.com/?s=${search}&apikey=${process.env.API_KEY}`)
     .then((result) => {
       console.log(result.data);
       res.statusCode = 200;

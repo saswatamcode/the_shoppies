@@ -17,7 +17,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ value, handleChange }) => {
           <input
             type="text"
             name="search"
-            className="w-11/12"
+            className="w-11/12 focus:outline-none"
             value={value}
             onChange={handleChange}
             aria-label="Search"

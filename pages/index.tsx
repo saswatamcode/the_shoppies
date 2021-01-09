@@ -34,7 +34,6 @@ const Home: React.FC = () => {
         .then((res) => {
           setIsSearching(false);
           setSearchResults(res.data);
-          console.log(res.data);
         })
         .catch((error) => console.log(error));
     }
@@ -49,7 +48,6 @@ const Home: React.FC = () => {
       }
       setNominees((prevState: IMovie[]) => [...prevState, result]);
     }
-    console.log(nominees);
   };
 
   const handleRemove = (result: IMovie) => {
@@ -58,7 +56,16 @@ const Home: React.FC = () => {
         prevState.filter((res) => result !== res)
       );
     }
-    console.log(nominees);
+  };
+
+  const isNominee = (id: string): boolean => {
+    var ret = false;
+    nominees.map((nominee: IMovie) => {
+      if (id === nominee.imdbID) {
+        ret = true;
+      }
+    });
+    return ret;
   };
 
   return (
@@ -82,7 +89,7 @@ const Home: React.FC = () => {
                       key={result.imdbID}
                       result={result}
                       nominatedList={false}
-                      disableBtn={nominees.includes(result)}
+                      disableBtn={isNominee(result.imdbID)}
                       color={colors[Math.floor(Math.random() * colors.length)]}
                       handler={handleAdd}
                     />
