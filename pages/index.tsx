@@ -6,6 +6,8 @@ import MovieCard from "../components/MovieCard";
 import SearchBar from "../components/SearchBar";
 import Banner from "../components/Banner";
 import useStickyState from "../lib/useStickyState";
+import ResultBar from "../components/ResultsBar";
+import Loading from "../components/Loading";
 
 const Home: React.FC = () => {
   const [search, setSearch] = useState<string>("");
@@ -22,20 +24,25 @@ const Home: React.FC = () => {
     "blue-400",
     "green-400",
   ];
+
+  const fetchData = () => {
+    setIsSearching(true);
+    axios
+      .get(`${process.env.NEXT_PUBLIC_URL}/${search}`)
+      .then((res) => {
+        setIsSearching(false);
+        setSearchResults(res.data);
+      })
+      .catch((error) => console.log(error));
+  };
+
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearch(event.target.value);
   };
 
   useEffect(() => {
     if (debouncedSearch !== "") {
-      setIsSearching(true);
-      axios
-        .get(`${process.env.NEXT_PUBLIC_URL}/${search}`)
-        .then((res) => {
-          setIsSearching(false);
-          setSearchResults(res.data);
-        })
-        .catch((error) => console.log(error));
+      fetchData();
     }
   }, [debouncedSearch]);
 
@@ -59,13 +66,17 @@ const Home: React.FC = () => {
   };
 
   const isNominee = (id: string): boolean => {
-    var ret = false;
+    var val = false;
     nominees.map((nominee: IMovie) => {
       if (id === nominee.imdbID) {
-        ret = true;
+        val = true;
       }
     });
-    return ret;
+    return val;
+  };
+
+  const clearSearch = () => {
+    setSearchResults({} as IResults);
   };
 
   return (
@@ -77,26 +88,38 @@ const Home: React.FC = () => {
 
       <div className="grid grid-cols-3 gap-5 w-11/12">
         <div className="col-span-2">
-          <SearchBar value={search} handleChange={handleChange} />
+          <SearchBar
+            value={search}
+            handleChange={handleChange}
+            search={fetchData}
+          />
+          {isSearching && <Loading />}
 
           <div className="grid grid-cols-2 gap-5 w-full">
-            {isSearching && <h1>Loading...</h1>}
-            {searchResults && searchResults.Response === "True" && (
-              <>
-                {searchResults.Search.map((result: IMovie) => {
-                  return (
-                    <MovieCard
-                      key={result.imdbID}
-                      result={result}
-                      nominatedList={false}
-                      disableBtn={isNominee(result.imdbID)}
-                      color={colors[Math.floor(Math.random() * colors.length)]}
-                      handler={handleAdd}
-                    />
-                  );
-                })}
-              </>
-            )}
+            {!isSearching &&
+              searchResults &&
+              searchResults.Response === "True" && (
+                <>
+                  <ResultBar
+                    totalResults={searchResults.totalResults}
+                    clearSearch={clearSearch}
+                  />
+                  {searchResults.Search.map((result: IMovie) => {
+                    return (
+                      <MovieCard
+                        key={result.imdbID}
+                        result={result}
+                        nominatedList={false}
+                        disableBtn={isNominee(result.imdbID)}
+                        color={
+                          colors[Math.floor(Math.random() * colors.length)]
+                        }
+                        handler={handleAdd}
+                      />
+                    );
+                  })}
+                </>
+              )}
           </div>
         </div>
 

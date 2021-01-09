@@ -3,10 +3,15 @@ import { FaSearch } from "react-icons/fa";
 
 interface SearchBarProps {
   value: string;
+  search: () => void;
   handleChange: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
-const SearchBar: React.FC<SearchBarProps> = ({ value, handleChange }) => {
+const SearchBar: React.FC<SearchBarProps> = ({
+  value,
+  handleChange,
+  search,
+}) => {
   return (
     <div className="bg-gradient-to-r from-indigo-600 to-blue-400 rounded-lg shadow-xl p-6 w-full mb-6">
       <div className="flex justify-between text-gray-600">
@@ -22,7 +27,9 @@ const SearchBar: React.FC<SearchBarProps> = ({ value, handleChange }) => {
             onChange={handleChange}
             aria-label="Search"
           />
-          <FaSearch />
+          <button type="submit" onClick={search}>
+            <FaSearch />
+          </button>
         </div>
       </div>
     </div>
