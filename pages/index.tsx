@@ -4,12 +4,14 @@ import useDebounce from "../lib/useDebounce";
 import { IResults, IMovie } from "../types/types";
 import MovieCard from "../components/MovieCard";
 import SearchBar from "../components/SearchBar";
+import Banner from "../components/Banner";
 
 const Home: React.FC = () => {
   const [search, setSearch] = useState<string>("");
   const [searchResults, setSearchResults] = useState<IResults>();
   const [isSearching, setIsSearching] = useState<boolean>(false);
   const [nominees, setNominees] = useState<IMovie[]>([]);
+  const [showBanner, setShowBanner] = useState<boolean>(false);
   const debouncedSearch = useDebounce(search, 500);
 
   const colors = [
@@ -39,10 +41,13 @@ const Home: React.FC = () => {
   }, [debouncedSearch]);
 
   const handleAdd = (result: IMovie) => {
-    if (nominees) {
-      setNominees((prevState: IMovie[]) => [...prevState, result]);
-    } else {
+    if (nominees.length === 0) {
       setNominees([result]);
+    } else if (nominees.length > 0 && nominees.length < 5) {
+      if (nominees.length === 4) {
+        setShowBanner(true);
+      }
+      setNominees((prevState: IMovie[]) => [...prevState, result]);
     }
     console.log(nominees);
   };
@@ -58,6 +63,7 @@ const Home: React.FC = () => {
 
   return (
     <>
+      {showBanner ? <Banner close={() => setShowBanner(false)} /> : <></>}
       <h1 className="bg-clip-text text-transparent bg-gradient-to-r from-blue-700 via-red-500 to-yellow-500 text-5xl font-black mb-10">
         The Shoppies
       </h1>
@@ -71,11 +77,12 @@ const Home: React.FC = () => {
             {searchResults && searchResults.Response === "True" && (
               <>
                 {searchResults.Search.map((result: IMovie) => {
-                  if (!nominees.includes(result)) {
+                  if (nominees.includes(result)) {
                     return (
                       <MovieCard
                         result={result}
-                        nominated={false}
+                        nominatedList={false}
+                        disableBtn
                         color={
                           colors[Math.floor(Math.random() * colors.length)]
                         }
@@ -83,7 +90,16 @@ const Home: React.FC = () => {
                       />
                     );
                   } else {
-                    return <></>;
+                    return (
+                      <MovieCard
+                        result={result}
+                        nominatedList={false}
+                        color={
+                          colors[Math.floor(Math.random() * colors.length)]
+                        }
+                        handler={handleAdd}
+                      />
+                    );
                   }
                 })}
               </>
@@ -91,26 +107,30 @@ const Home: React.FC = () => {
           </div>
         </div>
 
-        <div className="bg-gradient-to-br from-black to-gray-500 rounded-xl w-full p-5">
-          <h2 className="text-white text-2xl font-black mb-10">
-            Your Nominations
-          </h2>
+        <div>
+          <div className="bg-gradient-to-br from-black to-gray-500 rounded-xl w-full p-5">
+            <h2 className="text-white text-2xl font-black mb-10">
+              Your Nominations
+            </h2>
 
-          <div className="grid grid-cols-1 gap-5 w-full">
-            {nominees.length > 0 && (
-              <>
-                {nominees.map((result: IMovie) => {
-                  return (
-                    <MovieCard
-                      result={result}
-                      nominated
-                      color={colors[Math.floor(Math.random() * colors.length)]}
-                      handler={handleRemove}
-                    />
-                  );
-                })}
-              </>
-            )}
+            <div className="grid grid-cols-1 gap-5 w-full">
+              {nominees.length > 0 && (
+                <>
+                  {nominees.map((result: IMovie) => {
+                    return (
+                      <MovieCard
+                        result={result}
+                        nominatedList
+                        color={
+                          colors[Math.floor(Math.random() * colors.length)]
+                        }
+                        handler={handleRemove}
+                      />
+                    );
+                  })}
+                </>
+              )}
+            </div>
           </div>
         </div>
       </div>

@@ -5,7 +5,8 @@ import { IMovie } from "../types/types";
 interface MovieCardProps {
   result: IMovie;
   color: string;
-  nominated: boolean;
+  nominatedList: boolean;
+  disableBtn?: boolean;
   handler: (result: IMovie) => void;
 }
 
@@ -13,7 +14,8 @@ const MovieCard: React.FC<MovieCardProps> = ({
   result,
   color,
   handler,
-  nominated,
+  nominatedList,
+  disableBtn,
 }) => {
   return (
     <div
@@ -26,7 +28,7 @@ const MovieCard: React.FC<MovieCardProps> = ({
         <p>{result.Type}</p>
       </div>
       <br />
-      {!nominated && (
+      {!nominatedList && (
         <Image
           className="object-cover rounded-md shadow-md"
           src={result.Poster}
@@ -37,10 +39,13 @@ const MovieCard: React.FC<MovieCardProps> = ({
       )}
       <br />
       <button
-        className="flex items-center justify-around bg-white text-red-400 h-8 rounded-full w-5/12"
+        disabled={disableBtn}
+        className={`flex items-center justify-around bg-white text-${
+          disableBtn ? "gray-400" : "red-400"
+        } h-8 rounded-full w-5/12`}
         onClick={() => handler(result)}
       >
-        {nominated ? (
+        {nominatedList ? (
           <>
             <FaHeartBroken />
             Unnominate
