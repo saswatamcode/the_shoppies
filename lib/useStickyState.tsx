@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
+import { IMovie } from "../types/types";
 
-function useStickyState(defaultValue: any, key: string) {
+function useStickyState(defaultValue: IMovie[] | [], key: string) {
   const [value, setValue] = useState(() => {
     const stickyValue = Cookies.get(key);
     return stickyValue !== undefined ? JSON.parse(stickyValue) : defaultValue;

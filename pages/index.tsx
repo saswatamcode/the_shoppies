@@ -30,14 +30,13 @@ const Home: React.FC = () => {
     if (debouncedSearch !== "") {
       setIsSearching(true);
       axios
-        .get(
-          `https://www.omdbapi.com/?s=${search}&apikey=${process.env.NEXT_PUBLIC_API_KEY}`
-        )
+        .get(`${process.env.NEXT_PUBLIC_URL}/${search}`)
         .then((res) => {
           setIsSearching(false);
           setSearchResults(res.data);
           console.log(res.data);
-        });
+        })
+        .catch((error) => console.log(error));
     }
   }, [debouncedSearch]);
 
@@ -78,32 +77,16 @@ const Home: React.FC = () => {
             {searchResults && searchResults.Response === "True" && (
               <>
                 {searchResults.Search.map((result: IMovie) => {
-                  if (nominees.includes(result)) {
-                    return (
-                      <MovieCard
-                        key={result.imdbID}
-                        result={result}
-                        nominatedList={false}
-                        disableBtn
-                        color={
-                          colors[Math.floor(Math.random() * colors.length)]
-                        }
-                        handler={handleAdd}
-                      />
-                    );
-                  } else {
-                    return (
-                      <MovieCard
-                        key={result.imdbID}
-                        result={result}
-                        nominatedList={false}
-                        color={
-                          colors[Math.floor(Math.random() * colors.length)]
-                        }
-                        handler={handleAdd}
-                      />
-                    );
-                  }
+                  return (
+                    <MovieCard
+                      key={result.imdbID}
+                      result={result}
+                      nominatedList={false}
+                      disableBtn={nominees.includes(result)}
+                      color={colors[Math.floor(Math.random() * colors.length)]}
+                      handler={handleAdd}
+                    />
+                  );
                 })}
               </>
             )}
