@@ -42,7 +42,7 @@ const MovieCard: React.FC<MovieCardProps> = ({
         disabled={disableBtn}
         className={`flex items-center justify-around bg-white text-${
           disableBtn ? "gray-400" : "red-400"
-        } h-8 rounded-full w-5/12 shadow-md`}
+        } h-8 rounded-full w-7/12 xl:w-6/12 md:w-5/12 shadow-md`}
         onClick={() => handler(result)}
       >
         {nominatedList ? (

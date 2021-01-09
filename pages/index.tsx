@@ -86,8 +86,8 @@ const Home: React.FC = () => {
         The Shoppies
       </h1>
 
-      <div className="grid grid-cols-3 gap-5 w-11/12">
-        <div className="col-span-2">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:w-11/12">
+        <div className="md:col-span-2">
           <SearchBar
             value={search}
             handleChange={handleChange}
@@ -95,7 +95,7 @@ const Home: React.FC = () => {
           />
           {isSearching && <Loading />}
 
-          <div className="grid grid-cols-2 gap-5 w-full">
+          <div className="flex flex-col gap-7 md:grid md:grid-cols-2 md:gap-5 w-full">
             {!isSearching &&
               searchResults &&
               searchResults.Response === "True" && (

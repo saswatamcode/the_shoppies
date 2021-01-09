@@ -14,11 +14,11 @@ const SearchBar: React.FC<SearchBarProps> = ({
 }) => {
   return (
     <div className="bg-gradient-to-r from-indigo-600 to-blue-400 rounded-lg shadow-xl p-6 w-full mb-6">
-      <div className="flex justify-between text-gray-600">
+      <div className="flex flex-col gap-3 md:flex-row justify-between text-gray-600">
         <label className="text-white text-2xl font-bold pr-10">
           Movie Title
         </label>
-        <div className="flex items-center bg-white h-10 pl-5 rounded-full text-sm w-8/12">
+        <div className="flex items-center bg-white h-10 pl-5 rounded-full text-sm md:w-8/12">
           <input
             type="text"
             name="search"

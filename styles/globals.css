@@ -16,5 +16,5 @@
 
 body {
     @apply bg-blue-100;
-    @apply p-10;
+    @apply p-5 md:p-10;
 }
